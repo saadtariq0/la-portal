@@ -477,7 +477,7 @@
     <!-- Header -->
     <header>
         <div class="header-main">
-            <div class="logo">
+            <div class="logo" style="cursor: pointer;">
                 <div class="logo-placeholder">
                     <img src="logo.png" alt="LA Department of Building and Safety">
                 </div>
@@ -610,6 +610,7 @@
     <script>
         // Handle New Permit link and card clicks
         document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.querySelector('.logo');
             const homeLink = document.querySelector('.home-link');
             const newPermitLink = document.querySelector('.new-permit-link');
             const newPermitCard = document.querySelector('.new-permit-card');
@@ -741,6 +742,14 @@
             // Home link click handler
             if (homeLink) {
                 homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.goBack();
+                });
+            }
+            
+            // Logo click handler
+            if (logo) {
+                logo.addEventListener('click', function(e) {
                     e.preventDefault();
                     window.goBack();
                 });
