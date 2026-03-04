@@ -41,7 +41,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 1100;
             border-bottom: 1px solid #e0e0e0;
         }
 
@@ -216,7 +216,7 @@
             visibility: hidden;
             transform: translateY(-10px);
             transition: all 0.2s ease;
-            z-index: 1001;
+            z-index: 1200;
         }
 
         .user-profile {
@@ -303,11 +303,15 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
             opacity: 0;
+            visibility: hidden;
             transition: opacity 0.3s ease;
+            pointer-events: none;
         }
 
         .mobile-menu-overlay.active {
             opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
         }
 
         /* Main Content */
@@ -545,6 +549,17 @@
 
             .user-profile span {
                 display: none;
+            }
+
+            .user-profile {
+                position: static;
+            }
+
+            .user-dropdown {
+                position: fixed;
+                right: 1rem;
+                top: 4rem;
+                left: auto;
             }
 
             .hero-section {
