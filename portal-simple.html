@@ -608,7 +608,7 @@
     </main>
 
     <script>
-        // Handle New Permit link and card clicks
+        // Handle all navigation links and cards
         document.addEventListener('DOMContentLoaded', function() {
             const logo = document.querySelector('.logo');
             const homeLink = document.querySelector('.home-link');
@@ -616,6 +616,13 @@
             const newPermitCard = document.querySelector('.new-permit-card');
             const myPermitsLink = document.querySelector('.my-permits-link');
             const myPermitsCard = document.querySelector('.my-permits-card');
+            const applicationsLink = document.querySelector('a[href="#applications"]');
+            const projectsLink = document.querySelector('a[href="#projects"]');
+            const requestsLink = document.querySelector('a[href="#requests"]');
+            const feesLink = document.querySelector('a[href="#fees"]');
+            const toolsLink = document.querySelector('a[href="#tools"]');
+            const payFeeCard = document.querySelectorAll('.card')[2]; // Pay Fee card
+            const permitGuideCard = document.querySelectorAll('.card')[3]; // Permit Guide card
             const mainContent = document.querySelector('main');
             const userProfile = document.querySelector('.user-profile');
             let originalContent = mainContent.innerHTML;
@@ -723,6 +730,209 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
+            function openApplicationsPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Applications
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            View and manage all your permit applications.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openProjectsPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Projects
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Manage your construction projects and related permits.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openRequestsPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Requests
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Submit and track inspection requests and other service requests.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openFeesPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Fees
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            View fee schedules and payment history.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openToolsPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Tools
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Access useful tools and calculators for your projects.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openPayFeePage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Pay Fee
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Make secure online payments for permits and inspections.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openPermitGuidePage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            Permit Guide
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Access guidelines, requirements, and helpful resources for your permit applications.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
             // Function to go back to home page
             window.goBack = function() {
                 mainContent.innerHTML = originalContent;
@@ -731,11 +941,20 @@
                 // Re-attach event listeners after restoring content
                 const newCard = document.querySelector('.new-permit-card');
                 const myCard = document.querySelector('.my-permits-card');
+                const payCard = document.querySelectorAll('.card')[2];
+                const guideCard = document.querySelectorAll('.card')[3];
+                
                 if (newCard) {
                     newCard.addEventListener('click', openNewPermitPage);
                 }
                 if (myCard) {
                     myCard.addEventListener('click', openMyPermitsPage);
+                }
+                if (payCard) {
+                    payCard.addEventListener('click', openPayFeePage);
+                }
+                if (guideCard) {
+                    guideCard.addEventListener('click', openPermitGuidePage);
                 }
             };
             
@@ -755,20 +974,50 @@
                 });
             }
             
+            // Menu link handlers
             if (newPermitLink) {
                 newPermitLink.addEventListener('click', openNewPermitPage);
-            }
-            
-            if (newPermitCard) {
-                newPermitCard.addEventListener('click', openNewPermitPage);
             }
             
             if (myPermitsLink) {
                 myPermitsLink.addEventListener('click', openMyPermitsPage);
             }
             
+            if (applicationsLink) {
+                applicationsLink.addEventListener('click', openApplicationsPage);
+            }
+            
+            if (projectsLink) {
+                projectsLink.addEventListener('click', openProjectsPage);
+            }
+            
+            if (requestsLink) {
+                requestsLink.addEventListener('click', openRequestsPage);
+            }
+            
+            if (feesLink) {
+                feesLink.addEventListener('click', openFeesPage);
+            }
+            
+            if (toolsLink) {
+                toolsLink.addEventListener('click', openToolsPage);
+            }
+            
+            // Card handlers
+            if (newPermitCard) {
+                newPermitCard.addEventListener('click', openNewPermitPage);
+            }
+            
             if (myPermitsCard) {
                 myPermitsCard.addEventListener('click', openMyPermitsPage);
+            }
+            
+            if (payFeeCard) {
+                payFeeCard.addEventListener('click', openPayFeePage);
+            }
+            
+            if (permitGuideCard) {
+                permitGuideCard.addEventListener('click', openPermitGuidePage);
             }
         });
     </script>
