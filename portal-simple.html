@@ -136,13 +136,22 @@
 
         .nav-menu .has-submenu > a {
             position: relative;
+            padding-right: 1.5rem;
         }
 
+        /* Hide underline for submenu parent */
+        .nav-menu .has-submenu > a::after {
+            display: none !important;
+        }
+
+        /* Add dropdown arrow on the right */
         .nav-menu .has-submenu > a::before {
-            content: ' ▾';
-            font-size: 0.75rem;
-            margin-left: 0.25rem;
-            display: inline-block;
+            content: '▾';
+            font-size: 1rem;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .submenu {
@@ -607,7 +616,8 @@
 
             /* Keep submenu indicator on mobile */
             .nav-menu .has-submenu > a::before {
-                content: ' ▾';
+                content: '▾';
+                font-size: 1rem;
             }
 
             /* Show submenu in mobile menu */
