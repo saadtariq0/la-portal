@@ -134,9 +134,15 @@
             position: relative;
         }
 
-        .nav-menu .has-submenu > a::after {
+        .nav-menu .has-submenu > a {
+            position: relative;
+        }
+
+        .nav-menu .has-submenu > a::before {
             content: ' ▾';
             font-size: 0.75rem;
+            margin-left: 0.25rem;
+            display: inline-block;
         }
 
         .submenu {
@@ -597,6 +603,33 @@
 
             .nav-menu a::after {
                 display: none;
+            }
+
+            /* Keep submenu indicator on mobile */
+            .nav-menu .has-submenu > a::before {
+                content: ' ▾';
+            }
+
+            /* Show submenu in mobile menu */
+            .submenu {
+                position: static;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 0;
+                margin: 0;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                background-color: #f5f5f5;
+            }
+
+            .submenu li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .submenu a {
+                padding: 1rem 1.5rem 1rem 2.5rem;
+                font-size: 0.9375rem;
             }
 
             .user-actions {
