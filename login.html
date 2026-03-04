@@ -520,6 +520,480 @@
                 font-size: 0.95rem;
             }
         }
+
+        /* =============================================
+           PERMIT LOOKUP & FEE CALCULATOR SECTION
+        ============================================= */
+        .tools-section {
+            padding: 3rem 2rem;
+            background: linear-gradient(160deg, #f0f6fb 0%, #e8f4fd 100%);
+        }
+
+        .tools-section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary-color);
+            margin-bottom: 0.4rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            font-size: 0.9375rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            max-width: 560px;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid #dbeafe;
+            box-shadow: 0 2px 12px rgba(0, 85, 135, 0.07);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .tool-card:hover {
+            box-shadow: 0 8px 28px rgba(0, 85, 135, 0.13);
+            transform: translateY(-2px);
+        }
+
+        .tool-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .tool-card-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .tool-card-icon.blue  { background: linear-gradient(135deg, #005587, #0070c1); }
+        .tool-card-icon.teal  { background: linear-gradient(135deg, #0e7490, #06b6d4); }
+
+        .tool-card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+
+        .tool-card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .tool-card-desc {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+        }
+
+        .tool-input-row {
+            display: flex;
+            gap: 0.625rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .tool-input {
+            flex: 1;
+            padding: 0.625rem 0.875rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            color: var(--text-color);
+            outline: none;
+            transition: border-color 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .tool-input:focus {
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .tool-select {
+            flex: 1;
+            padding: 0.625rem 0.875rem;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            color: var(--text-color);
+            outline: none;
+            background: #f9fafb;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .tool-select:focus {
+            border-color: var(--primary-color);
+            background: white;
+        }
+
+        .tool-btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            font-family: var(--font-family);
+            font-size: 0.875rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: filter 0.2s ease, transform 0.15s ease;
+            white-space: nowrap;
+            color: white;
+        }
+
+        .tool-btn.blue { background: linear-gradient(135deg, #005587, #0070c1); }
+        .tool-btn.teal { background: linear-gradient(135deg, #0e7490, #06b6d4); }
+
+        .tool-btn:hover {
+            filter: brightness(1.08);
+            transform: translateY(-1px);
+        }
+
+        .tool-result {
+            display: none;
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 1rem 1.125rem;
+            margin-top: 0.75rem;
+        }
+
+        .tool-result.visible { display: block; }
+
+        .tool-result-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #0369a1;
+            margin-bottom: 0.25rem;
+        }
+
+        .tool-result-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0c4a6e;
+        }
+
+        .tool-result-sub {
+            font-size: 0.8125rem;
+            color: #0369a1;
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .tools-grid { grid-template-columns: 1fr; }
+            .tools-section { padding: 2rem 1rem; }
+            .section-title { font-size: 1.4rem; }
+        }
+
+        /* =============================================
+           ACCOUNT TYPES SECTION
+        ============================================= */
+        .accounts-section {
+            padding: 3rem 2rem;
+            background: var(--white);
+        }
+
+        .accounts-section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .accounts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-top: 2rem;
+        }
+
+        .account-card {
+            border-radius: 18px;
+            padding: 2rem 1.75rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid transparent;
+        }
+
+        .account-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+        }
+
+        .account-card.personal {
+            background: linear-gradient(145deg, #f0f6ff 0%, #dbeafe 100%);
+            border-color: #bfdbfe;
+        }
+
+        .account-card.business {
+            background: linear-gradient(145deg, #005587 0%, #003d5c 100%);
+            color: white;
+        }
+
+        .account-card.contractor {
+            background: linear-gradient(145deg, #fefce8 0%, #fef08a 100%);
+            border-color: #fde047;
+        }
+
+        .account-card-badge {
+            display: inline-block;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.625rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+
+        .personal .account-card-badge  { background: #bfdbfe; color: #1e40af; }
+        .business .account-card-badge  { background: rgba(255,255,255,0.2); color: white; }
+        .contractor .account-card-badge { background: #fde047; color: #713f12; }
+
+        .account-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .personal .account-card-icon   { background: white; color: #005587; }
+        .business .account-card-icon   { background: rgba(255,255,255,0.15); color: white; }
+        .contractor .account-card-icon { background: white; color: #92400e; }
+
+        .account-card-icon svg { width: 28px; height: 28px; }
+
+        .account-card-name {
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+
+        .personal .account-card-name   { color: #1e3a5f; }
+        .business .account-card-name   { color: white; }
+        .contractor .account-card-name { color: #78350f; }
+
+        .account-card-desc {
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .personal .account-card-desc   { color: #3b5a7a; }
+        .business .account-card-desc   { color: rgba(255,255,255,0.8); }
+        .contractor .account-card-desc { color: #92400e; }
+
+        .account-card-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .account-card-features li {
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .personal .account-card-features li   { color: #1e40af; }
+        .business .account-card-features li   { color: rgba(255,255,255,0.9); }
+        .contractor .account-card-features li { color: #78350f; }
+
+        .account-card-features li::before {
+            content: '✓';
+            font-size: 0.75rem;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .account-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 1.5rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: gap 0.2s ease;
+        }
+
+        .personal .account-cta   { color: #005587; }
+        .business .account-cta   { color: rgba(255,255,255,0.9); }
+        .contractor .account-cta { color: #92400e; }
+
+        .account-cta:hover { gap: 0.65rem; }
+
+        @media (max-width: 900px) {
+            .accounts-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .accounts-grid { grid-template-columns: 1fr; }
+            .accounts-section { padding: 2rem 1rem; }
+        }
+
+        /* =============================================
+           PERMIT TYPES SECTION
+        ============================================= */
+        .permits-section {
+            padding: 3rem 2rem 4rem;
+            background: linear-gradient(170deg, #0a1f35 0%, #005587 60%, #003d5c 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .permits-section::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 320px; height: 320px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .permits-section::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -60px;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .permits-section-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .permits-section .section-label { color: #7dd3fc; }
+        .permits-section .section-title { color: white; }
+        .permits-section .section-subtitle { color: rgba(255,255,255,0.65); }
+
+        .permits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .permit-card {
+            background: rgba(255,255,255,0.07);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 14px;
+            padding: 1.375rem 1.25rem;
+            transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+            cursor: default;
+        }
+
+        .permit-card:hover {
+            background: rgba(255,255,255,0.13);
+            border-color: rgba(255,255,255,0.28);
+            transform: translateY(-3px);
+        }
+
+        .permit-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.875rem;
+            color: #7dd3fc;
+        }
+
+        .permit-card-icon svg { width: 22px; height: 22px; }
+
+        .permit-card-name {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.35rem;
+            line-height: 1.3;
+        }
+
+        .permit-card-desc {
+            font-size: 0.78rem;
+            color: rgba(255,255,255,0.58);
+            line-height: 1.5;
+        }
+
+        .permit-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 0.2rem 0.5rem;
+            border-radius: 20px;
+            margin-top: 0.625rem;
+            background: rgba(125,211,252,0.15);
+            color: #7dd3fc;
+        }
+
+        @media (max-width: 900px) {
+            .permits-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .permits-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .permits-section { padding: 2rem 1rem 3rem; }
+        }
+
+        /* Footer strip */
+        .page-footer {
+            background: #0a1f35;
+            padding: 1.25rem 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.35);
+        }
     </style>
 </head>
 <body>
@@ -591,9 +1065,237 @@
             </div>
         </section>
 
+        <!-- ── PERMIT LOOKUP & FEE CALCULATOR ── -->
+        <section class="tools-section">
+            <div class="tools-section-inner">
+                <p class="section-label">Quick Tools</p>
+                <h2 class="section-title">Permit Lookup &amp; Fee Calculator</h2>
+                <p class="section-subtitle">Instantly search any existing permit or estimate fees before you apply — no login required.</p>
+                <div class="tools-grid">
+
+                    <!-- Permit Lookup -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-card-icon blue">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            </div>
+                            <span class="tool-card-title">Permit Lookup</span>
+                        </div>
+                        <p class="tool-card-desc">Search by permit number, address, or APN to view status, inspection history, and documents for any permit on record.</p>
+                        <div class="tool-input-row">
+                            <input class="tool-input" id="permitSearch" type="text" placeholder="Permit # or Address…">
+                            <button class="tool-btn blue" onclick="lookupPermit()">Search</button>
+                        </div>
+                        <div class="tool-result" id="permitResult">
+                            <div class="tool-result-label">Permit Found</div>
+                            <div class="tool-result-value" id="permitResultValue"></div>
+                            <div class="tool-result-sub" id="permitResultSub"></div>
+                        </div>
+                    </div>
+
+                    <!-- Fee Calculator -->
+                    <div class="tool-card">
+                        <div class="tool-card-header">
+                            <div class="tool-card-icon teal">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            </div>
+                            <span class="tool-card-title">Fee Estimator</span>
+                        </div>
+                        <p class="tool-card-desc">Select a permit type and enter project valuation to get an instant fee estimate before starting your application.</p>
+                        <div class="tool-input-row">
+                            <select class="tool-select" id="feePermitType">
+                                <option value="">Select permit type…</option>
+                                <option value="building">Building / Construction</option>
+                                <option value="electrical">Electrical</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="mechanical">Mechanical / HVAC</option>
+                                <option value="grading">Grading</option>
+                                <option value="demolition">Demolition</option>
+                            </select>
+                        </div>
+                        <div class="tool-input-row">
+                            <input class="tool-input" id="feeValuation" type="number" placeholder="Project valuation ($)">
+                            <button class="tool-btn teal" onclick="calcFee()">Estimate</button>
+                        </div>
+                        <div class="tool-result" id="feeResult">
+                            <div class="tool-result-label">Estimated Fee</div>
+                            <div class="tool-result-value" id="feeResultValue"></div>
+                            <div class="tool-result-sub">Final fees determined at plan check. This is an estimate only.</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── ACCOUNT TYPES ── -->
+        <section class="accounts-section">
+            <div class="accounts-section-inner">
+                <p class="section-label">Get Started</p>
+                <h2 class="section-title">Choose Your Account Type</h2>
+                <p class="section-subtitle">LACPS supports three account profiles — each tailored to your role in the permitting process.</p>
+                <div class="accounts-grid">
+
+                    <!-- Personal / Owner -->
+                    <div class="account-card personal">
+                        <span class="account-card-badge">Homeowner</span>
+                        <div class="account-card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                        </div>
+                        <div class="account-card-name">Personal / Owner</div>
+                        <div class="account-card-desc">For homeowners managing permits on their own residential property — renovations, additions, or accessory structures.</div>
+                        <ul class="account-card-features">
+                            <li>Residential permit applications</li>
+                            <li>Track inspection scheduling</li>
+                            <li>View property permit history</li>
+                            <li>Pay fees &amp; download documents</li>
+                        </ul>
+                        <a href="#" onclick="return false;" class="account-cta">Create Personal Account →</a>
+                    </div>
+
+                    <!-- Business -->
+                    <div class="account-card business">
+                        <span class="account-card-badge">Enterprise</span>
+                        <div class="account-card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                        </div>
+                        <div class="account-card-name">Business</div>
+                        <div class="account-card-desc">For property developers, real estate companies, and organizations managing multiple projects and commercial permits.</div>
+                        <ul class="account-card-features">
+                            <li>Multi-project dashboard</li>
+                            <li>Team member access &amp; roles</li>
+                            <li>Commercial &amp; mixed-use permits</li>
+                            <li>Bulk fee payments &amp; invoicing</li>
+                        </ul>
+                        <a href="#" onclick="return false;" class="account-cta">Create Business Account →</a>
+                    </div>
+
+                    <!-- Contractor -->
+                    <div class="account-card contractor">
+                        <span class="account-card-badge">Licensed Pro</span>
+                        <div class="account-card-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                        </div>
+                        <div class="account-card-name">Contractor / Designer</div>
+                        <div class="account-card-desc">For licensed contractors, architects, and engineers filing permits on behalf of their clients across multiple job sites.</div>
+                        <ul class="account-card-features">
+                            <li>File permits for multiple clients</li>
+                            <li>License verification integration</li>
+                            <li>Plan submission &amp; corrections</li>
+                            <li>Inspection result notifications</li>
+                        </ul>
+                        <a href="#" onclick="return false;" class="account-cta">Create Contractor Account →</a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ── PERMIT TYPES ── -->
+        <section class="permits-section">
+            <div class="permits-section-inner">
+                <p class="section-label">What We Process</p>
+                <h2 class="section-title">Permits Issued Through LACPS</h2>
+                <p class="section-subtitle">From a single-family addition to a high-rise development — if it's in Los Angeles, it flows through here.</p>
+                <div class="permits-grid">
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg></div>
+                        <div class="permit-card-name">Building &amp; Construction</div>
+                        <div class="permit-card-desc">New construction, additions, remodels, and structural alterations for residential and commercial properties.</div>
+                        <span class="permit-tag">Most Common</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+                        <div class="permit-card-name">Electrical</div>
+                        <div class="permit-card-desc">Service upgrades, panel replacements, EV charger installations, solar PV systems, and wiring work.</div>
+                        <span class="permit-tag">Residential &amp; Commercial</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13l-.87.5M4.21 15.5l-.87.5M19.79 15.5l-.87-.5M4.21 8.5l-.87-.5M21 12h-1M4 12H3"/></svg></div>
+                        <div class="permit-card-name">Plumbing</div>
+                        <div class="permit-card-desc">Water heaters, sewer laterals, re-pipes, gas lines, and fixture installations requiring city inspection.</div>
+                        <span class="permit-tag">Inspection Required</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+                        <div class="permit-card-name">Mechanical / HVAC</div>
+                        <div class="permit-card-desc">HVAC systems, furnaces, air handlers, ductwork, boilers, and ventilation equipment replacements.</div>
+                        <span class="permit-tag">Energy Compliance</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M5 21H3M9 7h6m-3-3v3m-4 4h8"/></svg></div>
+                        <div class="permit-card-name">Demolition</div>
+                        <div class="permit-card-desc">Full or partial structure removal, including asbestos clearance requirements and utility disconnection coordination.</div>
+                        <span class="permit-tag">Clearance Required</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 9m0 8V9m0 0L9 7"/></svg></div>
+                        <div class="permit-card-name">Grading &amp; Earthwork</div>
+                        <div class="permit-card-desc">Hillside grading, soil excavation, retaining walls, and land leveling projects requiring engineering review.</div>
+                        <span class="permit-tag">Geo-Technical Review</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m6.364 1.636l-.707.707M21 12h-1M17.657 17.657l-.707.707M12 20v1M6.343 17.657l-.707.707M4 12H3M6.343 6.343l-.707-.707"/></svg></div>
+                        <div class="permit-card-name">Solar &amp; Green Energy</div>
+                        <div class="permit-card-desc">Rooftop solar panels, battery storage systems, EV charging infrastructure, and Title 24 energy upgrades.</div>
+                        <span class="permit-tag">Expedited Review</span>
+                    </div>
+
+                    <div class="permit-card">
+                        <div class="permit-card-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+                        <div class="permit-card-name">Certificate of Occupancy</div>
+                        <div class="permit-card-desc">New buildings, change of occupancy, and tenant improvement projects requiring a final C of O before opening.</div>
+                        <span class="permit-tag">Final Sign-Off</span>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- Footer -->
+    <footer class="page-footer">
+        © 2026 City of Los Angeles — Department of Building and Safety. All rights reserved.
+    </footer>
+
     <script>
+        // Permit Lookup (mock)
+        function lookupPermit() {
+            const val = document.getElementById('permitSearch').value.trim();
+            const result = document.getElementById('permitResult');
+            const rv = document.getElementById('permitResultValue');
+            const rs = document.getElementById('permitResultSub');
+            if (!val) return;
+            const statuses = ['Approved — Inspections Pending', 'Issued — Active', 'Finaled — Closed', 'Under Plan Check'];
+            const types = ['Building Permit', 'Electrical Permit', 'Plumbing Permit', 'Mechanical Permit'];
+            rv.textContent = types[Math.floor(Math.random()*types.length)] + ' · ' + statuses[Math.floor(Math.random()*statuses.length)];
+            rs.textContent = 'APN: 4321-018-' + Math.floor(Math.random()*900+100) + '  ·  Last updated: ' + new Date().toLocaleDateString();
+            result.classList.add('visible');
+        }
+
+        // Fee Estimator (mock)
+        function calcFee() {
+            const type = document.getElementById('feePermitType').value;
+            const val = parseFloat(document.getElementById('feeValuation').value);
+            const result = document.getElementById('feeResult');
+            const rv = document.getElementById('feeResultValue');
+            if (!type || !val || val <= 0) return;
+            const rates = { building: 0.018, electrical: 0.012, plumbing: 0.011, mechanical: 0.013, grading: 0.022, demolition: 0.009 };
+            const base = val * (rates[type] || 0.015);
+            const surcharge = base * 0.085;
+            const total = base + surcharge + 45;
+            rv.textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+            result.classList.add('visible');
+        }
+
         // Handle hamburger menu toggle
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.querySelector('.hamburger');
