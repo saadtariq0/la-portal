@@ -255,6 +255,54 @@
             color: var(--text-light);
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1002;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 3px;
+            background-color: var(--text-color);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+        }
+
         /* Main Content */
         main {
             max-width: 1100px;
@@ -426,21 +474,62 @@
 
         @media (max-width: 768px) {
             .header-main {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 1rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .hamburger {
+                display: flex;
             }
 
             nav {
-                margin-left: 0;
-                width: 100%;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: var(--white);
+                padding: 5rem 0 2rem;
+                margin: 0;
+                transition: right 0.3s ease;
+                z-index: 1000;
+                box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            .mobile-menu-overlay {
+                display: block;
             }
 
             .nav-menu {
-                flex-direction: row;
-                gap: 1rem;
-                overflow-x: auto;
-                padding-bottom: 0.5rem;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                overflow-y: auto;
+                max-height: calc(100vh - 7rem);
+            }
+
+            .nav-menu li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .nav-menu a {
+                padding: 1rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .nav-menu a::after {
+                display: none;
+            }
+
+            .user-actions {
+                gap: 0.75rem;
+            }
+
+            .user-profile span {
+                display: none;
             }
 
             .hero-section {
@@ -448,14 +537,25 @@
             }
 
             .hero-overlay h1 {
-                font-size: 1.5rem;
-                letter-spacing: 0.03em;
+                font-size: 2rem;
+                letter-spacing: -0.01em;
                 white-space: normal;
             }
 
             .image-grid {
                 grid-template-columns: 1fr;
-                gap: 2px;
+                gap: 0;
+            }
+
+            .image-box {
+                height: 200px;
+            }
+
+            /* Hide extra images on mobile */
+            .image-box:nth-child(2),
+            .image-box:nth-child(3),
+            .image-box:nth-child(4) {
+                display: none;
             }
 
             .card-section {
@@ -464,11 +564,31 @@
 
             .card-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .card {
                 padding: 2rem 1.5rem;
+                min-height: 200px;
+            }
+
+            .card-icon {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 1.25rem;
+            }
+
+            .card-icon svg {
+                width: 38px;
+                height: 38px;
+            }
+
+            .card h3 {
+                font-size: 1.25rem;
+            }
+
+            .card p {
+                font-size: 0.875rem;
             }
         }
     </style>
@@ -482,6 +602,17 @@
                     <img src="logo.png" alt="LA Department of Building and Safety">
                 </div>
             </div>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <!-- Mobile Menu Overlay -->
+            <div class="mobile-menu-overlay"></div>
+            
             <nav>
                 <ul class="nav-menu">
                     <li><a href="#home" class="home-link">Home</a></li>
@@ -625,7 +756,44 @@
             const permitGuideCard = document.querySelectorAll('.card')[3]; // Permit Guide card
             const mainContent = document.querySelector('main');
             const userProfile = document.querySelector('.user-profile');
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('nav');
+            const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+            const navLinks = document.querySelectorAll('.nav-menu a');
             let originalContent = mainContent.innerHTML;
+            
+            // Hamburger menu toggle
+            if (hamburger) {
+                hamburger.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                    nav.classList.toggle('active');
+                    mobileMenuOverlay.classList.toggle('active');
+                    document.body.style.overflow = nav.classList.contains('active') ? 'hidden' : '';
+                });
+            }
+
+            // Close mobile menu when clicking overlay
+            if (mobileMenuOverlay) {
+                mobileMenuOverlay.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    nav.classList.remove('active');
+                    this.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+
+            // Close mobile menu when clicking a nav link
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 768) {
+                        hamburger.classList.remove('active');
+                        nav.classList.remove('active');
+                        mobileMenuOverlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                });
+            });
             
             // User dropdown toggle
             if (userProfile) {
