@@ -136,7 +136,7 @@
 
         .nav-menu .has-submenu > a {
             position: relative;
-            padding-right: 1.5rem;
+            padding-right: 1rem;
         }
 
         /* Hide underline for submenu parent */
@@ -147,9 +147,9 @@
         /* Add dropdown arrow on the right */
         .nav-menu .has-submenu > a::before {
             content: '▾';
-            font-size: 1rem;
+            font-size: 1.125rem;
             position: absolute;
-            right: 0;
+            right: -0.15rem;
             top: 50%;
             transform: translateY(-50%);
         }
@@ -617,7 +617,9 @@
             /* Keep submenu indicator on mobile */
             .nav-menu .has-submenu > a::before {
                 content: '▾';
-                font-size: 1rem;
+                font-size: 1.125rem;
+                position: absolute;
+                right: -0.15rem;
             }
 
             /* Show submenu in mobile menu */
