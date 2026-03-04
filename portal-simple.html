@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA City Permitting System</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #005587;
+            --primary-dark: #003d5c;
+            --secondary-color: #00a1de;
+            --background-color: #f4f6f9;
+            --text-color: #1a1a1a;
+            --text-light: #666666;
+            --border-color: #e5e7eb;
+            --white: #ffffff;
+            --font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: var(--font-family);
+            color: var(--text-color);
+            background-color: var(--background-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex: 0 0 auto;
+        }
+
+        .logo-placeholder {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-placeholder img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            max-width: 180px;
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            margin-left: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-menu li {
+            position: relative;
+        }
+
+        .nav-menu a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            display: block;
+            transition: color 0.2s ease;
+            font-size: 0.9375rem;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.2s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }        .nav-menu a:hover::after {
+            transform: scaleX(1);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .search-icon,
+        .notification-icon {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .search-icon:hover,
+        .notification-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .search-icon svg,
+        .notification-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.625rem;
+            font-weight: 700;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .user-profile:hover {
+            background-color: #f5f5f5;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8125rem;
+            color: var(--white);
+        }
+
+        /* User Dropdown Menu */
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            right: 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            z-index: 1001;
+        }
+
+        .user-profile {
+            position: relative;
+        }
+
+        .user-profile.active .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown-item {
+            padding: 0.875rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+            font-size: 0.9375rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown-item:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .user-dropdown-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .user-dropdown-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .user-dropdown-item svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-light);
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* Hero Section - Image Grid */
+        .hero-section {
+            padding: 3rem 2rem 3rem;
+            position: relative;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .image-box {
+            height: 300px;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
+            max-width: none;
+            padding: 0 1rem;
+        }
+
+        .hero-overlay h1 {
+            font-size: 3.75rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            white-space: nowrap;
+            animation: fadeInScale 1.2s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Card Section */
+        .card-section {
+            padding: 0 2rem 3rem;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 1px solid #d8dce6;
+            border-radius: 8px;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            position: relative;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card:nth-child(1) {
+            background: linear-gradient(135deg, #4a5f8f 0%, #2d4a7c 100%);
+        }
+
+        .card:nth-child(2) {
+            background: linear-gradient(135deg, #d97757 0%, #c44536 100%);
+        }
+
+        .card:nth-child(3) {
+            background: linear-gradient(135deg, #3a7ca5 0%, #2f6690 100%);
+        }
+
+        .card:nth-child(4) {
+            background: linear-gradient(135deg, #4a9d7f 0%, #357a5e 100%);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-icon svg {
+            width: 44px;
+            height: 44px;
+            stroke-width: 2;
+            color: white;
+            stroke: white;
+        }
+
+        .card h3 {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0;
+            line-height: 1.3;
+        }
+
+        .card p {
+            font-size: 0.9375rem;
+            color: rgba(255, 255, 255, 0.95);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-main {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            nav {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .nav-menu {
+                flex-direction: row;
+                gap: 1rem;
+                overflow-x: auto;
+                padding-bottom: 0.5rem;
+            }
+
+            .hero-section {
+                padding: 2rem 1rem 2rem;
+            }
+
+            .hero-overlay h1 {
+                font-size: 1.5rem;
+                letter-spacing: 0.03em;
+                white-space: normal;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+                gap: 2px;
+            }
+
+            .card-section {
+                padding: 0 1rem 2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 2rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-main">
+            <div class="logo">
+                <div class="logo-placeholder">
+                    <img src="logo.png" alt="LA Department of Building and Safety">
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home" class="home-link">Home</a></li>
+                    <li><a href="#new-permit" class="new-permit-link">New Permit</a></li>
+                    <li><a href="#my-permits" class="my-permits-link">My Permits</a></li>
+                    <li><a href="#applications">Applications</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#requests">Requests</a></li>
+                    <li><a href="#fees">Fees</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <div class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+                <div class="notification-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">JD</div>
+                    <span>John Doe</span>
+                    <div class="user-dropdown">
+                        <div class="user-dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                            <span>User Profile</span>
+                        </div>
+                        <div class="user-dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                            </svg>
+                            <span>Join Company</span>
+                        </div>
+                        <div class="user-dropdown-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            <span>Log Out</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section - Image Grid -->
+        <section class="hero-section">
+            <div class="image-grid">
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&h=300&fit=crop" alt="Construction Site">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500&h=300&fit=crop" alt="Building Construction">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&h=300&fit=crop" alt="Construction Workers">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop" alt="Building Development">
+                </div>
+            </div>
+            <div class="hero-overlay">
+                <h1>Los Angeles City Permitting System</h1>
+            </div>
+        </section>
+
+        <!-- Card Section -->
+        <section class="card-section">
+            <div class="card-grid">
+                <!-- New Permit Card -->
+                <div class="card new-permit-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                        </svg>
+                    </div>
+                    <h3>New Permit</h3>
+                    <p>Start a new permit application for your construction project</p>
+                </div>
+
+                <!-- My Permits Card -->
+                <div class="card my-permits-card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h3>My Permits</h3>
+                    <p>View and manage your existing permit applications and approvals</p>
+                </div>
+
+                <!-- Pay Fee Card -->
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                        </svg>
+                    </div>
+                    <h3>Pay Fee</h3>
+                    <p>Make secure online payments for permits and inspections</p>
+                </div>
+
+                <!-- Permit Guide Card -->
+                <div class="card">
+                    <div class="card-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    <h3>Permit Guide</h3>
+                    <p>Access guidelines, requirements, and helpful resources</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Handle New Permit link and card clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            const homeLink = document.querySelector('.home-link');
+            const newPermitLink = document.querySelector('.new-permit-link');
+            const newPermitCard = document.querySelector('.new-permit-card');
+            const myPermitsLink = document.querySelector('.my-permits-link');
+            const myPermitsCard = document.querySelector('.my-permits-card');
+            const mainContent = document.querySelector('main');
+            const userProfile = document.querySelector('.user-profile');
+            let originalContent = mainContent.innerHTML;
+            
+            // User dropdown toggle
+            if (userProfile) {
+                userProfile.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('active');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!userProfile.contains(e.target)) {
+                        userProfile.classList.remove('active');
+                    }
+                });
+
+                // Handle dropdown item clicks
+                const dropdownItems = document.querySelectorAll('.user-dropdown-item');
+                dropdownItems.forEach(item => {
+                    item.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const text = this.textContent.trim();
+                        
+                        if (text === 'Log Out') {
+                            alert('Logging out...');
+                            // Add logout logic here
+                        } else if (text === 'User Profile') {
+                            alert('Opening User Profile...');
+                            // Add user profile logic here
+                        } else if (text === 'Join Company') {
+                            alert('Opening Join Company...');
+                            // Add join company logic here
+                        }
+                        
+                        userProfile.classList.remove('active');
+                    });
+                });
+            }
+            
+            function openNewPermitPage(e) {
+                e.preventDefault();
+                
+                // Replace main content with blank page
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            New Permit Application
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            Complete the form below to start your permit application.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            function openMyPermitsPage(e) {
+                e.preventDefault();
+                
+                // Replace main content with blank page
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
+                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
+                            My Permits
+                        </h2>
+                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
+                            View and manage your existing permit applications.
+                        </p>
+                        <button onclick="goBack()" style="
+                            background-color: var(--primary-color);
+                            color: white;
+                            border: none;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 6px;
+                            font-weight: 600;
+                            cursor: pointer;
+                            font-family: var(--font-family);
+                            font-size: 0.9375rem;
+                            transition: background-color 0.2s ease;
+                        ">
+                            ← Back to Home
+                        </button>
+                    </section>
+                `;
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
+            // Function to go back to home page
+            window.goBack = function() {
+                mainContent.innerHTML = originalContent;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Re-attach event listeners after restoring content
+                const newCard = document.querySelector('.new-permit-card');
+                const myCard = document.querySelector('.my-permits-card');
+                if (newCard) {
+                    newCard.addEventListener('click', openNewPermitPage);
+                }
+                if (myCard) {
+                    myCard.addEventListener('click', openMyPermitsPage);
+                }
+            };
+            
+            // Home link click handler
+            if (homeLink) {
+                homeLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.goBack();
+                });
+            }
+            
+            if (newPermitLink) {
+                newPermitLink.addEventListener('click', openNewPermitPage);
+            }
+            
+            if (newPermitCard) {
+                newPermitCard.addEventListener('click', openNewPermitPage);
+            }
+            
+            if (myPermitsLink) {
+                myPermitsLink.addEventListener('click', openMyPermitsPage);
+            }
+            
+            if (myPermitsCard) {
+                myPermitsCard.addEventListener('click', openMyPermitsPage);
+            }
+        });
+    </script>
+</body>
+</html>
