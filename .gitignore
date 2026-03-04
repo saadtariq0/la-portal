@@ -1,0 +1,13 @@
+# Ignore screenshots (too large)
+Screenshot*.png
+
+# Ignore old files
+page.html
+test.py
+test.sql
+portal.html
+portal-wireframe.html
+logo_ladbs_horiz.png
+
+# System files
+.DS_Store
