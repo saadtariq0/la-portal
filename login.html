@@ -156,6 +156,27 @@
             object-fit: contain;
         }
 
+        .search-icon {
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s ease;
+            color: var(--text-color);
+        }
+
+        .search-icon:hover {
+            background-color: rgba(0, 0, 0, 0.06);
+        }
+
+        .search-icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
         /* Hamburger Menu */
         .hamburger {
             display: none;
@@ -372,6 +393,11 @@
             .login-button img {
                 height: 32px;
             }
+
+            .search-icon svg {
+                width: 18px;
+                height: 18px;
+            }
         }
     </style>
 </head>
@@ -403,6 +429,11 @@
                 </ul>
             </nav>
             <div class="user-actions">
+                <div class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
                 <a href="portal-simple.html" class="login-button">
                     <img src="login.png" alt="Login">
                 </a>
