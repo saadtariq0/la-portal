@@ -1065,69 +1065,6 @@
             </div>
         </section>
 
-        <!-- ── PERMIT LOOKUP & FEE CALCULATOR ── -->
-        <section class="tools-section">
-            <div class="tools-section-inner">
-                <p class="section-label">Quick Tools</p>
-                <h2 class="section-title">Permit Lookup &amp; Fee Calculator</h2>
-                <p class="section-subtitle">Instantly search any existing permit or estimate fees before you apply — no login required.</p>
-                <div class="tools-grid">
-
-                    <!-- Permit Lookup -->
-                    <div class="tool-card">
-                        <div class="tool-card-header">
-                            <div class="tool-card-icon blue">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                            </div>
-                            <span class="tool-card-title">Permit Lookup</span>
-                        </div>
-                        <p class="tool-card-desc">Search by permit number, address, or APN to view status, inspection history, and documents for any permit on record.</p>
-                        <div class="tool-input-row">
-                            <input class="tool-input" id="permitSearch" type="text" placeholder="Permit # or Address…">
-                            <button class="tool-btn blue" onclick="lookupPermit()">Search</button>
-                        </div>
-                        <div class="tool-result" id="permitResult">
-                            <div class="tool-result-label">Permit Found</div>
-                            <div class="tool-result-value" id="permitResultValue"></div>
-                            <div class="tool-result-sub" id="permitResultSub"></div>
-                        </div>
-                    </div>
-
-                    <!-- Fee Calculator -->
-                    <div class="tool-card">
-                        <div class="tool-card-header">
-                            <div class="tool-card-icon teal">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                            </div>
-                            <span class="tool-card-title">Fee Estimator</span>
-                        </div>
-                        <p class="tool-card-desc">Select a permit type and enter project valuation to get an instant fee estimate before starting your application.</p>
-                        <div class="tool-input-row">
-                            <select class="tool-select" id="feePermitType">
-                                <option value="">Select permit type…</option>
-                                <option value="building">Building / Construction</option>
-                                <option value="electrical">Electrical</option>
-                                <option value="plumbing">Plumbing</option>
-                                <option value="mechanical">Mechanical / HVAC</option>
-                                <option value="grading">Grading</option>
-                                <option value="demolition">Demolition</option>
-                            </select>
-                        </div>
-                        <div class="tool-input-row">
-                            <input class="tool-input" id="feeValuation" type="number" placeholder="Project valuation ($)">
-                            <button class="tool-btn teal" onclick="calcFee()">Estimate</button>
-                        </div>
-                        <div class="tool-result" id="feeResult">
-                            <div class="tool-result-label">Estimated Fee</div>
-                            <div class="tool-result-value" id="feeResultValue"></div>
-                            <div class="tool-result-sub">Final fees determined at plan check. This is an estimate only.</div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
         <!-- ── ACCOUNT TYPES ── -->
         <section class="accounts-section">
             <div class="accounts-section-inner">
@@ -1267,35 +1204,6 @@
     </footer>
 
     <script>
-        // Permit Lookup (mock)
-        function lookupPermit() {
-            const val = document.getElementById('permitSearch').value.trim();
-            const result = document.getElementById('permitResult');
-            const rv = document.getElementById('permitResultValue');
-            const rs = document.getElementById('permitResultSub');
-            if (!val) return;
-            const statuses = ['Approved — Inspections Pending', 'Issued — Active', 'Finaled — Closed', 'Under Plan Check'];
-            const types = ['Building Permit', 'Electrical Permit', 'Plumbing Permit', 'Mechanical Permit'];
-            rv.textContent = types[Math.floor(Math.random()*types.length)] + ' · ' + statuses[Math.floor(Math.random()*statuses.length)];
-            rs.textContent = 'APN: 4321-018-' + Math.floor(Math.random()*900+100) + '  ·  Last updated: ' + new Date().toLocaleDateString();
-            result.classList.add('visible');
-        }
-
-        // Fee Estimator (mock)
-        function calcFee() {
-            const type = document.getElementById('feePermitType').value;
-            const val = parseFloat(document.getElementById('feeValuation').value);
-            const result = document.getElementById('feeResult');
-            const rv = document.getElementById('feeResultValue');
-            if (!type || !val || val <= 0) return;
-            const rates = { building: 0.018, electrical: 0.012, plumbing: 0.011, mechanical: 0.013, grading: 0.022, demolition: 0.009 };
-            const base = val * (rates[type] || 0.015);
-            const surcharge = base * 0.085;
-            const total = base + surcharge + 45;
-            rv.textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
-            result.classList.add('visible');
-        }
-
         // Handle hamburger menu toggle
         document.addEventListener('DOMContentLoaded', function() {
             const hamburger = document.querySelector('.hamburger');

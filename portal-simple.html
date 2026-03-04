@@ -760,6 +760,13 @@
                         </ul>
                     </li>
                     <li><a href="#fees" class="fees-link">Pay Fee</a></li>
+                    <li class="has-submenu">
+                        <a href="#quick-tools">Quick Tools</a>
+                        <ul class="submenu">
+                            <li><a href="#permit-lookup" class="permit-lookup-link">Permit Lookup</a></li>
+                            <li><a href="#fee-calculator" class="fee-calculator-link">Fee Calculator</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </nav>
             <div class="user-actions">
@@ -889,6 +896,8 @@
             const projectsLink = document.querySelector('.projects-link');
             const requestsLink = document.querySelector('.requests-link');
             const feesLink = document.querySelector('.fees-link');
+            const permitLookupLink = document.querySelector('.permit-lookup-link');
+            const feeCalculatorLink = document.querySelector('.fee-calculator-link');
             const payFeeCard = document.querySelector('.pay-fee-card');
             const mainContent = document.querySelector('main');
             const userProfile = document.querySelector('.user-profile');
@@ -1179,6 +1188,82 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
+            function openPermitLookupPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 860px; margin: 0 auto; min-height: 70vh;">
+                        <button onclick="goBack()" style="background:none;border:none;color:var(--primary-color);font-weight:700;font-family:var(--font-family);font-size:0.9rem;cursor:pointer;margin-bottom:1.5rem;padding:0;display:flex;align-items:center;gap:0.4rem;">← Back to Home</button>
+                        <h2 style="font-size:2rem;font-weight:800;color:var(--text-color);margin-bottom:0.5rem;">Permit Lookup</h2>
+                        <p style="color:var(--text-light);font-size:0.9375rem;margin-bottom:2rem;">Search by permit number, address, or APN to view status, inspection history, and documents.</p>
+                        <div style="background:white;border-radius:16px;padding:2rem;border:1px solid #dbeafe;box-shadow:0 2px 12px rgba(0,85,135,0.07);">
+                            <div style="display:flex;gap:0.625rem;margin-bottom:1rem;">
+                                <input id="psPermitSearch" type="text" placeholder="Enter permit number or address…" style="flex:1;padding:0.7rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-family:var(--font-family);font-size:0.9rem;outline:none;background:#f9fafb;" onfocus="this.style.borderColor='#005587'" onblur="this.style.borderColor='#e5e7eb'">
+                                <button onclick="psLookup()" style="background:linear-gradient(135deg,#005587,#0070c1);color:white;border:none;padding:0.7rem 1.5rem;border-radius:8px;font-family:var(--font-family);font-weight:700;font-size:0.9rem;cursor:pointer;">Search</button>
+                            </div>
+                            <div id="psResult" style="display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:1rem 1.25rem;">
+                                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#0369a1;margin-bottom:0.25rem;">Permit Found</div>
+                                <div id="psResultValue" style="font-size:1.2rem;font-weight:800;color:#0c4a6e;"></div>
+                                <div id="psResultSub" style="font-size:0.8rem;color:#0369a1;margin-top:0.2rem;"></div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.psLookup = function() {
+                    const val = document.getElementById('psPermitSearch').value.trim();
+                    if (!val) return;
+                    const statuses = ['Approved — Inspections Pending','Issued — Active','Finaled — Closed','Under Plan Check'];
+                    const types = ['Building Permit','Electrical Permit','Plumbing Permit','Mechanical Permit'];
+                    document.getElementById('psResultValue').textContent = types[Math.floor(Math.random()*types.length)] + ' · ' + statuses[Math.floor(Math.random()*statuses.length)];
+                    document.getElementById('psResultSub').textContent = 'APN: 4321-018-' + Math.floor(Math.random()*900+100) + '  ·  Last updated: ' + new Date().toLocaleDateString();
+                    document.getElementById('psResult').style.display = 'block';
+                };
+            }
+
+            function openFeeCalculatorPage(e) {
+                e.preventDefault();
+                mainContent.innerHTML = `
+                    <section style="padding: 3rem 2rem; max-width: 860px; margin: 0 auto; min-height: 70vh;">
+                        <button onclick="goBack()" style="background:none;border:none;color:var(--primary-color);font-weight:700;font-family:var(--font-family);font-size:0.9rem;cursor:pointer;margin-bottom:1.5rem;padding:0;display:flex;align-items:center;gap:0.4rem;">← Back to Home</button>
+                        <h2 style="font-size:2rem;font-weight:800;color:var(--text-color);margin-bottom:0.5rem;">Fee Calculator</h2>
+                        <p style="color:var(--text-light);font-size:0.9375rem;margin-bottom:2rem;">Select a permit type and enter your project valuation to get an instant fee estimate.</p>
+                        <div style="background:white;border-radius:16px;padding:2rem;border:1px solid #ccfbf1;box-shadow:0 2px 12px rgba(14,116,144,0.07);">
+                            <div style="display:flex;gap:0.625rem;margin-bottom:0.75rem;">
+                                <select id="fcType" style="flex:1;padding:0.7rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-family:var(--font-family);font-size:0.9rem;background:#f9fafb;outline:none;cursor:pointer;">
+                                    <option value="">Select permit type…</option>
+                                    <option value="building">Building / Construction</option>
+                                    <option value="electrical">Electrical</option>
+                                    <option value="plumbing">Plumbing</option>
+                                    <option value="mechanical">Mechanical / HVAC</option>
+                                    <option value="grading">Grading</option>
+                                    <option value="demolition">Demolition</option>
+                                </select>
+                            </div>
+                            <div style="display:flex;gap:0.625rem;margin-bottom:1rem;">
+                                <input id="fcVal" type="number" placeholder="Project valuation ($)" style="flex:1;padding:0.7rem 1rem;border:1.5px solid #e5e7eb;border-radius:8px;font-family:var(--font-family);font-size:0.9rem;outline:none;background:#f9fafb;" onfocus="this.style.borderColor='#0e7490'" onblur="this.style.borderColor='#e5e7eb'">
+                                <button onclick="fcCalc()" style="background:linear-gradient(135deg,#0e7490,#06b6d4);color:white;border:none;padding:0.7rem 1.5rem;border-radius:8px;font-family:var(--font-family);font-weight:700;font-size:0.9rem;cursor:pointer;">Estimate</button>
+                            </div>
+                            <div id="fcResult" style="display:none;background:#f0fdfa;border:1px solid #99f6e4;border-radius:10px;padding:1rem 1.25rem;">
+                                <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#0e7490;margin-bottom:0.25rem;">Estimated Fee</div>
+                                <div id="fcResultValue" style="font-size:1.4rem;font-weight:800;color:#134e4a;"></div>
+                                <div style="font-size:0.8rem;color:#0e7490;margin-top:0.2rem;">Final fees determined at plan check. This is an estimate only.</div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.fcCalc = function() {
+                    const type = document.getElementById('fcType').value;
+                    const val = parseFloat(document.getElementById('fcVal').value);
+                    if (!type || !val || val <= 0) return;
+                    const rates = {building:0.018,electrical:0.012,plumbing:0.011,mechanical:0.013,grading:0.022,demolition:0.009};
+                    const base = val * (rates[type] || 0.015);
+                    const total = base + base * 0.085 + 45;
+                    document.getElementById('fcResultValue').textContent = '$' + total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+                    document.getElementById('fcResult').style.display = 'block';
+                };
+            }
+
             // Function to go back to home page
             window.goBack = function() {
                 mainContent.innerHTML = originalContent;
@@ -1243,6 +1328,14 @@
             
             if (feesLink) {
                 feesLink.addEventListener('click', openPayFeePage);
+            }
+
+            if (permitLookupLink) {
+                permitLookupLink.addEventListener('click', openPermitLookupPage);
+            }
+
+            if (feeCalculatorLink) {
+                feeCalculatorLink.addEventListener('click', openFeeCalculatorPage);
             }
             
             // Card handlers
