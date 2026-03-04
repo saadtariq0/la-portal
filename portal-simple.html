@@ -826,17 +826,6 @@
                     <h3>Pay Fee</h3>
                     <p>Make secure online payments for permits and inspections</p>
                 </div>
-
-                <!-- Permit Guide Card -->
-                <div class="card">
-                    <div class="card-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                        </svg>
-                    </div>
-                    <h3>Permit Guide</h3>
-                    <p>Access guidelines, requirements, and helpful resources</p>
-                </div>
             </div>
         </section>
     </main>
@@ -856,7 +845,6 @@
             const requestsLink = document.querySelector('.requests-link');
             const feesLink = document.querySelector('.fees-link');
             const payFeeCard = document.querySelector('.pay-fee-card');
-            const permitGuideCard = document.querySelectorAll('.card')[3]; // Permit Guide card
             const mainContent = document.querySelector('main');
             const userProfile = document.querySelector('.user-profile');
             const hamburger = document.querySelector('.hamburger');
@@ -1146,35 +1134,6 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             
-            function openPermitGuidePage(e) {
-                e.preventDefault();
-                mainContent.innerHTML = `
-                    <section style="padding: 3rem 2rem; max-width: 1200px; margin: 0 auto; min-height: 70vh;">
-                        <h2 style="font-size: 2rem; font-weight: 700; color: var(--text-color); margin-bottom: 1rem;">
-                            Permit Guide
-                        </h2>
-                        <p style="color: var(--text-light); font-size: 1rem; margin-bottom: 2rem;">
-                            Access guidelines, requirements, and helpful resources for your permit applications.
-                        </p>
-                        <button onclick="goBack()" style="
-                            background-color: var(--primary-color);
-                            color: white;
-                            border: none;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 6px;
-                            font-weight: 600;
-                            cursor: pointer;
-                            font-family: var(--font-family);
-                            font-size: 0.9375rem;
-                            transition: background-color 0.2s ease;
-                        ">
-                            ← Back to Home
-                        </button>
-                    </section>
-                `;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            
             // Function to go back to home page
             window.goBack = function() {
                 mainContent.innerHTML = originalContent;
@@ -1185,7 +1144,6 @@
                 const myCard = document.querySelector('.my-permits-card');
                 const pausedCard = document.querySelector('.paused-applications-card');
                 const payCard = document.querySelector('.pay-fee-card');
-                const guideCard = document.querySelectorAll('.card')[3];
                 
                 if (newCard) {
                     newCard.addEventListener('click', openNewPermitPage);
@@ -1198,9 +1156,6 @@
                 }
                 if (payCard) {
                     payCard.addEventListener('click', openPayFeePage);
-                }
-                if (guideCard) {
-                    guideCard.addEventListener('click', openPermitGuidePage);
                 }
             };
             
@@ -1260,10 +1215,6 @@
             
             if (payFeeCard) {
                 payFeeCard.addEventListener('click', openPayFeePage);
-            }
-            
-            if (permitGuideCard) {
-                permitGuideCard.addEventListener('click', openPermitGuidePage);
             }
         });
     </script>
