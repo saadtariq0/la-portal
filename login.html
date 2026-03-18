@@ -315,8 +315,8 @@
 
         .image-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 0;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2px;
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
@@ -509,6 +509,13 @@
 
             .image-box {
                 height: 240px;
+            }
+
+            /* Hide extra images on mobile */
+            .image-box:nth-child(2),
+            .image-box:nth-child(3),
+            .image-box:nth-child(4) {
+                display: none;
             }
 
             .login-button img {
@@ -1097,7 +1104,16 @@
         <section class="hero-section">
             <div class="image-grid">
                 <div class="image-box">
-                    <img src="Fig-Plaza-Image.jpg" alt="Fig Plaza — Los Angeles">
+                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=500&h=300&fit=crop" alt="Construction Site">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=500&h=300&fit=crop" alt="Building Construction">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=500&h=300&fit=crop" alt="Construction Workers">
+                </div>
+                <div class="image-box">
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500&h=300&fit=crop" alt="Building Development">
                 </div>
             </div>
             <div class="hero-overlay">
